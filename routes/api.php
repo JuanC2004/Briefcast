@@ -28,11 +28,14 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('v1/logout',[AuthController::class,'logout'])->name('api.logout');
     Route::apiResource('v1/categories', CategoryController::class);
-    Route::apiResource('v1/comments', CommentController::class);
+    Route::apiResource('v1/comments', CommentController::class)->except(['index','show']);
     Route::apiResource('v1/developmenttools', DevelopmenttoolController::class);
     Route::apiResource('v1/participates',ParticipateController::class);
     Route::apiResource('v1/projects', ProjectController::class);
     Route::apiResource('v1/users', UserController::class);
 });
 
+
+Route::get('v1/comments/{comment}',[CommentController::class,'show']);
+Route::get('v1/comments',[CommentController::class,'index']);
 Route::post('v1/login',[AuthController::class,'login'])->name('api.login');
