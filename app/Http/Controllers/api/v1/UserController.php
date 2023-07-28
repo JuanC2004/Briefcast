@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\api\v1\ProjectStoreRequest;
+use App\Http\Requests\api\v1\UserStoreRequest;
+use App\Http\Requests\api\v1\UserUpdateRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -20,7 +23,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserStoreRequest $request)
     {
         $user = User::create($request->all());
         return response()->json(['data' => $user],201);
@@ -37,7 +40,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(UserUpdateRequest $request, User $user)
     {
         $user->update($request->all());
         return response()->json(['data' => $user],200);

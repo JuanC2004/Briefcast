@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\api\v1\DevelopmenttoolStoreRequest;
+use App\Http\Requests\api\v1\DevelopmenttoolUpdateRequest;
 use App\Models\Developmenttool;
 use Illuminate\Http\Request;
 
@@ -20,7 +22,7 @@ class DevelopmenttoolController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(DevelopmenttoolStoreRequest $request)
     {
         $developmenttool = Developmenttool::create($request->all());
         return response()->json(['data' => $developmenttool],201);
@@ -37,9 +39,9 @@ class DevelopmenttoolController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Developmenttool $developmenttool)
+    public function update(DevelopmenttoolUpdateRequest $request, Developmenttool $developmenttool)
     {
-        $developmenttool->update(request()->all());
+        $developmenttool->update($request()->all());
         return response()->json(['data' => $developmenttool],200);
     }
 
