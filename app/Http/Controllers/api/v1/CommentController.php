@@ -5,6 +5,8 @@ namespace App\Http\Controllers\api\v1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\api\v1\CommentStoreRequest;
 use App\Http\Requests\api\v1\CommentUpdateRequest;
+use App\Http\Resources\CommentCollection;
+use App\Http\Resources\CommentResource;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 
@@ -16,7 +18,7 @@ class CommentController extends Controller
     public function index()
     {
         $comments = Comment::orderBy('message','asc')->get();
-        return response()->json(['data' => $comments],200);
+        return response()->json(['data' =>$comments],200);
     }
 
     /**
@@ -25,7 +27,7 @@ class CommentController extends Controller
     public function store(CommentStoreRequest $request)
     {
         $comment = Comment::create($request->all());
-        return response()->json(['data' => $comment],201);
+        return response()->json(['data' => new CommentResource($comment)],201);
     }
 
     /**
@@ -33,7 +35,7 @@ class CommentController extends Controller
      */
     public function show(Comment $comment)
     {
-        return response()->json(['data' => $comment],200);
+        return response()->json(['data' => new CommentResource($comment)],200);
     }
 
     /**
@@ -42,7 +44,7 @@ class CommentController extends Controller
     public function update(CommentUpdateRequest $request, Comment $comment)
     {
         $comment->update($request->all());
-        return response()->json(['data' => $comment],200);
+        return response()->json(['data' => new CommentResource($comment)],200);
     }
 
     /**

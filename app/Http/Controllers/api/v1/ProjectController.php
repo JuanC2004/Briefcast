@@ -5,6 +5,8 @@ namespace App\Http\Controllers\api\v1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\api\v1\ProjectStoreRequest;
 use App\Http\Requests\api\v1\ProjectUpdateRequest;
+
+use App\Http\Resources\ProjectResource;
 use App\Models\Project;
 use Illuminate\Http\Request;
 
@@ -16,7 +18,7 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::orderBy('name','asc')->get();
-        return response()->json(['data' => $projects],200);
+        return response()->json(['data' => new $projects],200);
     }
 
     /**
@@ -25,7 +27,7 @@ class ProjectController extends Controller
     public function store(ProjectStoreRequest $request)
     {
         $project = Project::create($request->all());
-        return response()->json(['data' => $project],201);
+        return response()->json(['data' => new ProjectResource($project)],201);
     }
 
     /**
@@ -33,7 +35,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        return response()->json(['data' => $project],200);
+        return response()->json(['data' => new ProjectResource($project)],200);
     }
 
     /**
@@ -42,7 +44,7 @@ class ProjectController extends Controller
     public function update(ProjectUpdateRequest $request, Project $project)
     {
         $project->update($request->all());
-        return response()->json(['data' => $project],200);
+        return response()->json(['data' => new ProjectResource($project)],200);
     }
 
     /**

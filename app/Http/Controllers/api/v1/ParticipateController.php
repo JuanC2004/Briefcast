@@ -5,6 +5,8 @@ namespace App\Http\Controllers\api\v1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\api\v1\ParticipateStoreRequest;
 use App\Http\Requests\api\v1\ParticipateUpdateRequest;
+
+use App\Http\Resources\ParticipateResource;
 use App\Models\Participate;
 use Illuminate\Http\Request;
 
@@ -25,7 +27,7 @@ class ParticipateController extends Controller
     public function store(ParticipateStoreRequest $request)
     {
         $participate = Participate::create($request->all());
-        return response()->json(['data' => $participate],201);
+        return response()->json(['data' => new ParticipateResource($participate)],201);
     }
 
     /**
@@ -33,7 +35,7 @@ class ParticipateController extends Controller
      */
     public function show(Participate $participate)
     {
-        return response()->json(['data' => $participate],200);
+        return response()->json(['data' => new ParticipateResource($participate)],200);
     }
 
     /**
@@ -42,7 +44,7 @@ class ParticipateController extends Controller
     public function update(ParticipateUpdateRequest $request, Participate $participate)
     {
         $participate->update($request->all());
-        return response()->json(['data' => $participate],200);
+        return response()->json(['data' => new ParticipateResource($participate)],200);
     }
 
     /**
