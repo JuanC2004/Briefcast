@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\v1\AuthController;
 use App\Http\Controllers\api\v1\CategoryController;
 use App\Http\Controllers\api\v1\CommentController;
 use App\Http\Controllers\api\v1\DevelopmenttoolController;
@@ -24,10 +25,14 @@ use Illuminate\Support\Facades\Route;
     return $request->user();
 });
 */
+Route::middleware(['auth:sanctum'])->group(function(){
+    Route::post('v1/logout',[AuthController::class,'logout'])->name('api.logout');
+    Route::apiResource('v1/categories', CategoryController::class);
+    Route::apiResource('v1/comments', CommentController::class);
+    Route::apiResource('v1/developmenttools', DevelopmenttoolController::class);
+    Route::apiResource('v1/participates',ParticipateController::class);
+    Route::apiResource('v1/projects', ProjectController::class);
+    Route::apiResource('v1/users', UserController::class);
+});
 
-Route::apiResource('v1/categories', CategoryController::class);
-Route::apiResource('v1/comments', CommentController::class);
-Route::apiResource('v1/developmenttools', DevelopmenttoolController::class);
-Route::apiResource('v1/participates',ParticipateController::class);
-Route::apiResource('v1/projects', ProjectController::class);
-Route::apiResource('v1/users', UserController::class);
+Route::post('v1/login',[AuthController::class,'login'])->name('api.login');
