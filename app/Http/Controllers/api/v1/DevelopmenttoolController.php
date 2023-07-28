@@ -5,7 +5,7 @@ namespace App\Http\Controllers\api\v1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\api\v1\DevelopmenttoolStoreRequest;
 use App\Http\Requests\api\v1\DevelopmenttoolUpdateRequest;
-use App\Http\Resources\DevelopmenttoolCollection;
+
 use App\Http\Resources\DevelopmenttoolResource;
 use App\Models\Developmenttool;
 use Illuminate\Http\Request;
